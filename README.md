@@ -30,11 +30,64 @@
 Создать Deployment приложения, использующего локальный PV, созданный вручную.
 
 1. Создать Deployment приложения, состоящего из контейнеров busybox и multitool.
+#
+***Ответ***
+
+Создаём манифест [**deployment.yaml**](https://github.com/Liberaty/k8s_hw_07/blob/main/deployment.yaml) и запускаем его
+
+![1.1.png](https://github.com/Liberaty/k8s_hw_07/blob/main/img/1.1.png?raw=true)
+
 2. Создать PV и PVC для подключения папки на локальной ноде, которая будет использована в поде.
-3. Продемонстрировать, что multitool может читать файл, в который busybox пишет каждые пять секунд в общей директории. 
+#
+***Ответ***
+
+Создаём манифесты [**local-pv.yaml**](https://github.com/Liberaty/k8s_hw_07/blob/main/local-pv.yaml) и [**local-pvc.yaml**](https://github.com/Liberaty/k8s_hw_07/blob/main/local-pvc.yaml) потом запускаем их и проверяем их статус
+
+![1.2.png](https://github.com/Liberaty/k8s_hw_07/blob/main/img/1.2.png?raw=true)
+
+3. Продемонстрировать, что multitool может читать файл, в который busybox пишет каждые пять секунд в общей директории.
+#
+***Ответ***
+
+Проверка работы busybox
+
+![1.3.1.png](https://github.com/Liberaty/k8s_hw_07/blob/main/img/1.3.1.png?raw=true)
+
+Проверяем логи multitool
+
+![1.3.2.png](https://github.com/Liberaty/k8s_hw_07/blob/main/img/1.3.2.png?raw=true)
+
+Видим что всё работает.
+
 4. Удалить Deployment и PVC. Продемонстрировать, что после этого произошло с PV. Пояснить, почему.
+#
+***Ответ***
+
+Удаляю Deployment и PVC
+
+![1.4.png](https://github.com/Liberaty/k8s_hw_07/blob/main/img/1.4.png?raw=true)
+
+После удалении Deployment и PVC видим, что PV перешел в состояние Failed, т.к. контроллер PV не сумел удалить данные по пути /mnt/local-storage/busybox-multitool
+
 5. Продемонстрировать, что файл сохранился на локальном диске ноды. Удалить PV.  Продемонстрировать что произошло с файлом после удаления PV. Пояснить, почему.
-5. Предоставить манифесты, а также скриншоты или вывод необходимых команд.
+#
+***Ответ***
+
+На скриншоте ниже видно, что файл всё ещё содержит записи и файл success существует
+
+![1.5.1.png](https://github.com/Liberaty/k8s_hw_07/blob/main/img/1.5.1.png?raw=true)
+
+После удаления PV всё так же видно, что файл всё ещё содержит записи и файл success существует
+
+![1.5.2.png](https://github.com/Liberaty/k8s_hw_07/blob/main/img/1.5.2.png?raw=true)
+
+Так происходит из-за особенностей работы контроллера PV с hostPath
+
+6. Предоставить манифесты, а также скриншоты или вывод необходимых команд.
+#
+***Ответ***
+
+Все команды предоставлены на скриншоте выше.
 
 ------
 
